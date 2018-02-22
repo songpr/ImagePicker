@@ -219,10 +219,13 @@ public final class ImagePicker {
                         FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",
                                 ImageUtils.getTemporalFile(context, String.valueOf(mPickImageRequestCode))));
                 //Grant Runtime URi permissions as advice from @Code-N-K
-                List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(takePhotoIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                List<ResolveInfo> resInfoList = context.getPackageManager().
+                    queryIntentActivities(takePhotoIntent,PackageManager.MATCH_DEFAULT_ONLY);
                 for (ResolveInfo resolveInfo : resInfoList) {
                     String packageName = resolveInfo.activityInfo.packageName;
-                    context.grantUriPermission(packageName, imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    context.grantUriPermission(packageName, imageUri,
+                                               Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                                               | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 }
 
                 intentList = addIntentsToList(context, intentList, takePhotoIntent);
