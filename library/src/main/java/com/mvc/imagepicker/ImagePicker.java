@@ -216,7 +216,7 @@ public final class ImagePicker {
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 takePhotoIntent.putExtra("return-data", true);
                 Uri imageUri =  FileProvider.
-                    getUriForFile(context, 
+                    getUriForFile(context,
                                   BuildConfig.APPLICATION_ID + ".provider",
                                   ImageUtils.getTemporalFile(context, String.valueOf(mPickImageRequestCode)));
                 takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
