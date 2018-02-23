@@ -215,21 +215,10 @@ public final class ImagePicker {
             if (!appManifestContainsPermission(context, Manifest.permission.CAMERA) || hasCameraAccess(context)) {
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 takePhotoIntent.putExtra("return-data", true);
-                Uri imageUri =  FileProvider.
-                    getUriForFile(context,
-                                  BuildConfig.APPLICATION_ID + ".provider",
-                                  ImageUtils.getTemporalFile(context, String.valueOf(mPickImageRequestCode)));
-                takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                //Grant Runtime URi permissions as advice from @Code-N-K
-                List<ResolveInfo> resInfoList = context.getPackageManager().
-                    queryIntentActivities(takePhotoIntent, PackageManager.MATCH_DEFAULT_ONLY);
-                for (ResolveInfo resolveInfo : resInfoList) {
-                    String packageName = resolveInfo.activityInfo.packageName;
-                    context.grantUriPermission(packageName, imageUri,
-                                               Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                                               | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                }
-
+                takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",
+                                ImageUtils.getTemporalFile(context, String.valueOf(mPickImageRequestCode))));
+                //Uri.fromFile(ImageUtils.getTemporalFile(context, String.valueOf(mPickImageRequestCode))));
                 intentList = addIntentsToList(context, intentList, takePhotoIntent);
             }
         }
